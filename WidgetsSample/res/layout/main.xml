@@ -5,6 +5,8 @@
 	<TextView android:text="Hello!!!" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" />
 	<com.koushikdutta.widgets.GradientTextView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:startColor="#FF000000" android:endColor="@color/foo" android:angle="90"
-		android:textSize="14sp" android:text="HellO!!!!!" />
+		android:layout_height="wrap_content" android:startColor="#00000000" android:endColor="@color/foo" android:angle="90"
+		android:textSize="72sp" android:text="HellO!!!!!" />
+	<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:textSize="72sp" android:text="HellO!!!!!" />
 </LinearLayout>

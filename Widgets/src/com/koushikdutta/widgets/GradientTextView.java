@@ -24,6 +24,7 @@ public class GradientTextView extends View {
     public GradientTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mPaint = new TextPaint();
+        mPaint.setAntiAlias(true);
         
         int[] ids = new int[attrs.getAttributeCount()];
         for (int i = 0; i < attrs.getAttributeCount(); i++) {
