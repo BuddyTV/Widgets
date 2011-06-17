@@ -136,6 +136,7 @@ public class GradientTextView extends View {
     
     public void setText(String text) {
         mText = text;
+        requestLayout();
     }
     
     public String getText() {
@@ -148,6 +149,7 @@ public class GradientTextView extends View {
     
     public void setTextSize(float textSize) {
         mPaint.setTextSize(textSize);
+        requestLayout();
     }
     
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
