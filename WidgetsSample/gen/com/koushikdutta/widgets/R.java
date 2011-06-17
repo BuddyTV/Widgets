@@ -46,9 +46,6 @@ containing a value of this type.
          */
         public static final int textSize=0x7f010002;
     }
-    public static final class color {
-        public static final int foo=0x7f050000;
-    }
     public static final class drawable {
         public static final int icon=0x7f020000;
     }
