@@ -8,7 +8,8 @@ Gradient Text for Android made easy.
 		android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:startColor="#FF000000"
-			android:endColor="#FFFFFFFF" android:angle="90"
+			android:endColor="#FFFFFFFF"
+			android:angle="90"
 			android:textSize="72sp"
 			android:text="HellO!!!!!"
 			android:layout_centerInParent="true"/>
