@@ -2,6 +2,7 @@ package com.koushikdutta.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader.TileMode;
 import android.text.BoringLayout;
@@ -25,7 +26,6 @@ public class GradientTextView extends View {
         super(context, attrs, defStyle);
         mPaint = new TextPaint();
         mPaint.setAntiAlias(true);
-        
         int[] ids = new int[attrs.getAttributeCount()];
         for (int i = 0; i < attrs.getAttributeCount(); i++) {
             ids[i] = attrs.getAttributeNameResource(i);
@@ -36,12 +36,16 @@ public class GradientTextView extends View {
         
         for (int i = 0; i < attrs.getAttributeCount(); i++) {
             String attrName = attrs.getAttributeName(i);
+            if (attrName == null)
+                continue;
             
             if (attrName.equals("textSize")) {
                 mPaint.setTextSize(a.getDimension(i, -1));
             }
             else if (attrName.equals("text")) {
-                mText = a.getText(i).toString();
+                CharSequence cs = a.getText(i);
+                if (cs != null)
+                    mText = cs.toString();
             }
             else if (attrName.equals("startColor")) {
                 mStartColor = a.getColor(i, -1);
