@@ -56,24 +56,6 @@ public class GradientTextView extends View {
             else if (attrName.equals("angle")) {
                 mAngle = a.getFloat(i, 0);
             }
-
-            /*
-            switch (resId) {
-            case R.styleable.GradientTextView_gradientColorBottomRight:
-                TypedValue a;
-                TypedArray f;
-                mBR = a.getColor(resId, 0);
-                break;
-            case R.styleable.GradientTextView_gradientColorTopLeft:
-                mTL = a.getColor(resId, 0);
-                break;
-            case R.styleable.GradientTextView_textSize:
-                mPaint.setTextSize(a.getDimension(i, 0));
-                break;
-            case R.styleable.GradientTextView_text:
-                mText = a.getString(resId);
-            }
-            */
         }
     }
     
@@ -119,7 +101,7 @@ public class GradientTextView extends View {
             else {
                 n = (double)cy / y;
                 double n2 = (double)cx / x;
-                if (Math.abs(n2) > Math.abs(n))
+                if (Math.abs(n2) < Math.abs(n))
                     n = n2;
             }
             
