@@ -36,23 +36,6 @@ public class GradientTextView extends View {
         
         for (int i = 0; i < attrs.getAttributeCount(); i++) {
             String attrName = attrs.getAttributeName(i);
-
-            /*
-            try {
-                int resId = mRAttr.getField(attrName).getInt(null);
-                System.out.println(attrName);
-                System.out.println(resId);
-                System.out.println(attrs.getAttributeNameResource(i));
-                System.out.println(attrs.getAttributeIntValue(i, -10000));
-                System.out.println(attrs.getAttributeResourceValue(i, -10000));
-                System.out.println(attrs.getAttributeValue(i));
-                System.out.println("Color: " + a.getColor(i, 0));
-                System.out.println("Color: " + a.getColor(resId, 0));
-            }
-            catch (Exception ex) {
-            }
-            */
-            
             
             if (attrName.equals("textSize")) {
                 mPaint.setTextSize(a.getDimension(i, -1));
@@ -132,7 +115,7 @@ public class GradientTextView extends View {
             else {
                 n = (double)cy / y;
                 double n2 = (double)cx / x;
-                if (Math.abs(n2) < Math.abs(n))
+                if (Math.abs(n2) > Math.abs(n))
                     n = n2;
             }
             
