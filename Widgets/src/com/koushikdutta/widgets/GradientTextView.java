@@ -2,7 +2,6 @@ package com.koushikdutta.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader.TileMode;
 import android.text.BoringLayout;
@@ -10,6 +9,7 @@ import android.text.Layout.Alignment;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
 public class GradientTextView extends View {
     public GradientTextView(Context context, AttributeSet attrs) {
@@ -33,7 +33,6 @@ public class GradientTextView extends View {
         
         TypedArray a = context.obtainStyledAttributes(attrs, ids, defStyle, 0);
 
-        
         for (int i = 0; i < attrs.getAttributeCount(); i++) {
             String attrName = attrs.getAttributeName(i);
             if (attrName == null)
@@ -59,58 +58,68 @@ public class GradientTextView extends View {
         }
     }
     
+    public static void setGradient(TextView tv, float angle, int startColor, int endColor) {
+        tv.measure(tv.getLayoutParams().width, tv.getLayoutParams().height);
+        LinearGradient gradient = getGradient(tv.getMeasuredWidth(), tv.getMeasuredHeight(), angle, startColor, endColor);
+        tv.getPaint().setShader(gradient);
+    }
+    
+    static LinearGradient getGradient(int measuredWidth, int measuredHeight, float angle, int startColor, int endColor) {
+        // calculate a vector for this angle
+        double rad = Math.toRadians(angle);
+        double oa = Math.tan(rad);
+        double x;
+        double y;
+        if (oa == Double.POSITIVE_INFINITY) {
+            y = 1;
+            x = 0;
+        }
+        else if (oa == Double.NEGATIVE_INFINITY) {
+            y = -1;
+            x = 0;
+        }
+        else {
+            y = oa;
+            if (rad > Math.PI)
+                x = -1;
+            else
+                x = 1;
+        }
+        
+        // using the vector, calculate the start and end points from the center of the box
+        int mx = measuredWidth;
+        int my = measuredHeight;
+        int cx = mx / 2;
+        int cy = my / 2;
+        
+        double n;
+        if (x == 0) {
+            n = (double)cy / y;  
+        }
+        else if (y == 0) {
+            n = (double)cx / x;
+        }
+        else {
+            n = (double)cy / y;
+            double n2 = (double)cx / x;
+            if (Math.abs(n2) < Math.abs(n))
+                n = n2;
+        }
+        
+        int sx = (int)(cx - n * x);
+        int sy = (int)(cy - n * y);
+        int ex = (int)(cx + n * x);
+        int ey = (int)(cy + n * y);
+        
+        return new LinearGradient(sx, sy, ex, ey, startColor, endColor, TileMode.CLAMP);
+    }
+    
     protected void onDraw(android.graphics.Canvas canvas) {
         super.onDraw(canvas);
         if (mLayout == null)
             return;
         if (mGradient == null) {
-            // calculate a vector for this angle
-            double rad = Math.toRadians(mAngle);
-            double oa = Math.tan(rad);
-            double x;
-            double y;
-            if (oa == Double.POSITIVE_INFINITY) {
-                y = 1;
-                x = 0;
-            }
-            else if (oa == Double.NEGATIVE_INFINITY) {
-                y = -1;
-                x = 0;
-            }
-            else {
-                y = oa;
-                if (rad > Math.PI)
-                    x = -1;
-                else
-                    x = 1;
-            }
-            
-            // using the vector, calculate the start and end points from the center of the box
-            int mx = getMeasuredWidth();
-            int my = getMeasuredHeight();
-            int cx = mx / 2;
-            int cy = my / 2;
-            
-            double n;
-            if (x == 0) {
-                n = (double)cy / y;  
-            }
-            else if (y == 0) {
-                n = (double)cx / x;
-            }
-            else {
-                n = (double)cy / y;
-                double n2 = (double)cx / x;
-                if (Math.abs(n2) < Math.abs(n))
-                    n = n2;
-            }
-            
-            int sx = (int)(cx - n * x);
-            int sy = (int)(cy - n * y);
-            int ex = (int)(cx + n * x);
-            int ey = (int)(cy + n * y);
-            
-            mGradient = new LinearGradient(sx, sy, ex, ey, mStartColor, mEndColor, TileMode.CLAMP);
+            mGradient = getGradient(getMeasuredWidth(), getMeasuredHeight(), mAngle, mStartColor, mEndColor);
             mPaint.setShader(mGradient);
         }
         mLayout.draw(canvas);

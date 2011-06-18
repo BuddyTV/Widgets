@@ -1,5 +1,7 @@
 Gradient Text for Android made easy.
 
+Declaratively in XML:
+
 	<?xml version="1.0" encoding="utf-8"?>
 	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:orientation="vertical" android:layout_width="fill_parent"
@@ -15,6 +17,8 @@ Gradient Text for Android made easy.
 			android:layout_centerInParent="true"/>
 	</RelativeLayout>
 
-
+Or on a TextView object:
+TextView secondText = (TextView)findViewById(R.id.secondtext);
+GradientTextView.setGradient(secondText, 0, 0xFF000000, 0xFFFFFFFF);
 
 ![preview](https://github.com/koush/Widgets/raw/master/gradient.png)
