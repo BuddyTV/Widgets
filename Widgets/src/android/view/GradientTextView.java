@@ -1,17 +1,14 @@
-package com.koushikdutta.widgets;
+package android.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.LinearGradient;
 import android.graphics.Shader.TileMode;
 import android.text.BoringLayout;
-import android.text.Layout.Alignment;
-import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.TextView;
 
-public class GradientTextView extends View {
+public class GradientTextView extends TextView {
     public GradientTextView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -24,8 +21,6 @@ public class GradientTextView extends View {
 
     public GradientTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mPaint = new TextPaint();
-        mPaint.setAntiAlias(true);
         int[] ids = new int[attrs.getAttributeCount()];
         for (int i = 0; i < attrs.getAttributeCount(); i++) {
             ids[i] = attrs.getAttributeNameResource(i);
@@ -38,15 +33,7 @@ public class GradientTextView extends View {
             if (attrName == null)
                 continue;
             
-            if (attrName.equals("textSize")) {
-                mPaint.setTextSize(a.getDimension(i, -1));
-            }
-            else if (attrName.equals("text")) {
-                CharSequence cs = a.getText(i);
-                if (cs != null)
-                    mText = cs.toString();
-            }
-            else if (attrName.equals("startColor")) {
+            if (attrName.equals("startColor")) {
                 mStartColor = a.getColor(i, -1);
             }
             else if (attrName.equals("endColor")) {
@@ -115,14 +102,11 @@ public class GradientTextView extends View {
     }
     
     protected void onDraw(android.graphics.Canvas canvas) {
-        super.onDraw(canvas);
-        if (mLayout == null)
-            return;
         if (mGradient == null) {
             mGradient = getGradient(getMeasuredWidth(), getMeasuredHeight(), mAngle, mStartColor, mEndColor);
-            mPaint.setShader(mGradient);
+            getPaint().setShader(mGradient);
         }
-        mLayout.draw(canvas);
+        super.onDraw(canvas);
     }
     
     public int getStartColor() {
@@ -142,37 +126,11 @@ public class GradientTextView extends View {
         mEndColor = endColor;
         invalidate();
     }
-    
-    public void setText(String text) {
-        mText = text;
-        requestLayout();
-    }
-    
-    public String getText() {
-        return mText;
-    }
-    
-    public float getTextSize() {
-        return mPaint.getTextSize();
-    }
-    
-    public void setTextSize(float textSize) {
-        mPaint.setTextSize(textSize);
-        requestLayout();
-    }
-    
+
+
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (mText == null) {
-            setMeasuredDimension(0, 0);
-            return;
-        }
-        float w = mPaint.measureText(mText);
-        float h = mPaint.getFontSpacing();
-        setMeasuredDimension((int)w, (int)h);
-        mLayout = new BoringLayout(mText, mPaint, 0, Alignment.ALIGN_NORMAL, 0, 0, BoringLayout.isBoring(mText, mPaint), false);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         mGradient = null;
     }
-
-    TextPaint mPaint;
     LinearGradient mGradient;
 }

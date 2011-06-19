@@ -6,7 +6,7 @@ Declaratively in XML:
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-        <com.koushikdutta.widgets.GradientTextView
+        <GradientTextView
         android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:startColor="#FF000000"
@@ -16,10 +16,5 @@ Declaratively in XML:
             android:text="HellO!!!!!"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
-
-Or on a TextView object:
-
-    TextView secondText = (TextView)findViewById(R.id.secondtext);
-    GradientTextView.setGradient(secondText, 0, 0xFF000000, 0xFFFFFFFF);
 
 ![preview](https://github.com/koush/Widgets/raw/master/gradient.png)
