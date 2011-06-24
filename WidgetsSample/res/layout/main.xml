@@ -5,6 +5,8 @@
 	<LinearLayout android:orientation="vertical"
 		android:layout_width="wrap_content" android:layout_height="wrap_content"
 		android:layout_centerInParent="true">
+		<!-- May need to use view class="android.view.GradientTextView to find by id -->
+		<!-- Be mindful of padding vs margin. Padding eats into the gradient. -->
 		<GradientTextView
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:startColor="#FF000000" android:endColor="#FFFFFFFF"
